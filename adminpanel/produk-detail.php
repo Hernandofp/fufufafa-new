@@ -1,18 +1,19 @@
 <?php
-    require "session.php";
-    require "../koneksi.php";
+require "session.php";
+require "../koneksi.php";
 
-    $id=$_GET['p'];
+$id = $_GET['p'];
 
-    $query=mysqli_query($con, "SELECT a.*, b.nama AS nama_kategori FROM produk a JOIN kategori b ON a.kategori_id=b.id WHERE a.id='$id'");
-    $data= mysqli_fetch_array($query);
-    $queryKategori= mysqli_query($con, "SELECT * FROM kategori WHERE id!='$data[kategori_id]'");
-    
+$query = mysqli_query($con, "SELECT a.*, b.nama AS nama_kategori FROM produk a JOIN kategori b ON a.kategori_id=b.id WHERE a.id='$id'");
+$data = mysqli_fetch_array($query);
+$queryKategori = mysqli_query($con, "SELECT * FROM kategori WHERE id!='$data[kategori_id]'");
+
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +22,7 @@
 </head>
 
 <style>
-    form div{
+    form div {
         margin-bottom: 10px;
     }
 </style>
@@ -41,34 +42,40 @@
                 <div>
                     <label for="kategori">Kategori</label>
                     <select name="kategori" id="kategori" class="form-control" required>
-                        <option value="<?php echo $data['kategori_id']; ?>"><?php echo $data['nama_kategori'];?></option>
+                        <option value="<?php echo $data['kategori_id']; ?>"><?php echo $data['nama_kategori']; ?></option>
                         <?php
-                            while($dataKategori=mysqli_fetch_array($queryKategori)){
+                        while ($dataKategori = mysqli_fetch_array($queryKategori)) {
                         ?>
-                            <option value="<?php echo $dataKategori['id'];?>"><?php echo $dataKategori['nama']; ?></option>
-                        <?php       
-                            }
+                            <option value="<?php echo $dataKategori['id']; ?>"><?php echo $dataKategori['nama']; ?></option>
+                        <?php
+                        }
                         ?>
                     </select>
                 </div>
-                
+
                 <div>
                     <label for="harga">Harga</label>
-                    <input type="number" class="form-control" value="<?php echo $data['harga']; ?>"name="harga" required>
+                    <input type="number" class="form-control" value="<?php echo $data['harga']; ?>" name="harga" required>
                 </div>
                 <div>
-                    <label for="currentFoto">Foto Produk</label>
-                    <img src="../image/<?php echo $data['foto'] ?>" alt="">
+                    <label for="currentFoto">Foto Produk Sekarang</label>
+                    <img src="../image/<?php echo $data['foto'] ?>" alt="" width="300px">
 
                 </div>
                 <div>
                     <label for="foto">Foto</label>
                     <input type="file" name="foto" id="foto" class="form-control">
                 </div>
-    
+
             </form>
         </div>
     </div>
+
+    <!-- footer -->
+    <?php require "footer.php"; ?>
+
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="fontawesome/js/all.min.is"></script>
 </body>
+
 </html>
